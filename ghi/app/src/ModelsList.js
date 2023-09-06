@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 
 function ModelsList() {
     const [models, setModels] = useState([]);
-    // const [name, setName] = useState("");
-    // const [manufacturer, setManufacturer] = useState("");
-    // const [picture, setPicture] = useState("");
+
 
     const getData = async () => {
         const response = await fetch('http://localhost:8100/api/models/');

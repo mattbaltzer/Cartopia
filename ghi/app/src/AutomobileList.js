@@ -2,12 +2,6 @@ import { useEffect, useState } from 'react';
 
 function AutomobileList() {
     const [autos, setAutos] = useState([]);
-    // const [vin, setVin] = useState("");
-    // const [color, setColor] = useState("");
-    // const [year, setYear] = useState(0);
-    // const [model, setModel] = useState("");
-    // const [manufacturer, setManufacturer] = useState("");
-    // const [sold, setSold] = useState("");
 
     const getData = async () => {
         const response = await fetch('http://localhost:8100/api/automobiles/');
