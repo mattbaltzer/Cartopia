@@ -7,6 +7,11 @@ import ModelsList from './ModelsList';
 import ModelForm from './ModelForm';
 import AutomobileList from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
+import TechnicianList from './TechnicianList';
+import TechnicianForm from './TechnicianForm';
+import AppointmentForm from './AppointmentForm';
+import AppointmentList from './AppointmentList';
+import ServiceHistoryList from './ServiceHistoryList';
 
 function App() {
   return (
@@ -15,32 +20,31 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-        </Routes>
 
-        <Routes>
+
           <Route path="manufacturers/" element={<ManufacturersList />} />
-        </Routes>
 
-        <Routes>
           <Route path="manufacturers/create" element={<ManufacturerForm />} />
-        </Routes>
 
-        <Routes>
           <Route path="models/" element={<ModelsList />} />
-        </Routes>
 
-        <Routes>
           <Route path="models/create" element={<ModelForm />} />
-        </Routes>
 
-        <Routes>
           <Route path="automobiles" element={<AutomobileList />} />
-        </Routes>
 
-        <Routes>
           <Route path="automobiles/create" element={<AutomobileForm />} />
-        </Routes>
 
+          <Route path="technicians/" element={<TechnicianList />} />
+
+          <Route path="technicians/create" element={<TechnicianForm />} />
+
+          <Route path="appointments/create" element={<AppointmentForm />} />
+
+          <Route path="appointments/" element={<AppointmentList />} />
+
+          <Route path="history/" element={<ServiceHistoryList />} />
+
+        </Routes>
       </div>
     </BrowserRouter>
   );
