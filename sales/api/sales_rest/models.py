@@ -3,9 +3,8 @@ from django.db import models
 
 
 class AutomobileVO(models.Model):
-    vin = models.CharField(max_length=16)
-    sold = models.CharField(max_length=20)
-    import_href = models.CharField(max_length=200, unique=True)
+    vin = models.CharField(max_length=17, unique=True)
+    sold = models.BooleanField(default=False)
 
 
 class Salesperson(models.Model):
