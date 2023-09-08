@@ -17,7 +17,11 @@ function CustomersList() {
 	}, []);
 
 	return (
-		<div>
+		// <div className="row">
+		// 	<div className="offset-3 col-6">
+		// 		<div className="shadow p-4 mt-4">
+		<div className="shadow p-4 mt-4">
+			<h1>Customers</h1>
 			<table className="table table-striped">
 				<thead>
 					<tr>
@@ -41,6 +45,9 @@ function CustomersList() {
 				</tbody>
 			</table>
 		</div>
+		// 		</div>
+		// 	</div>
+		// </div>
 	);
 }
 
