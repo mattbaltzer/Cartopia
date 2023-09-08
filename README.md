@@ -23,7 +23,7 @@ How to start the project:
 
 ## Design
 
-![CarCar Diagram](./CarCar%20Diagram.png "Project Beta Diagram")
+![CarCar Diagram](CarCar%20Diagram.png "Project Beta Diagram")
 
 ## Service microservice
 
