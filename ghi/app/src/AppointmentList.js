@@ -26,7 +26,6 @@ function AppointmentList() {
           method: 'PUT',
         });
         if (response.ok) {
-            // setAppointments(appointments.filter(appointment => appointment.id !== id));
             getData();
         }
       }
@@ -37,7 +36,6 @@ function AppointmentList() {
           method: 'PUT',
         });
         if (response.ok) {
-            // setAppointments(appointments.filter(appointment => appointment.id !== id));
             getData();
         }
       }
@@ -61,13 +59,18 @@ return (
         </thead>
         <tbody>
             {appointments.map((appointment) => {
+                    const new_date = new Date(appointment.date_time);
+                    const date = new_date.toLocaleDateString("en-US");
+                    const options = { timeZone: "UTC", timeZoneName: "short", hour: "2-digit", minute: "2-digit" };
+                    const time = new_date.toLocaleTimeString("en-US", options);
+
                 return (
                     <tr key={appointment.id}>
                         <td>{appointment.vin}</td>
                         <td>{appointment.vip ? 'Yes': 'No'}</td>
                         <td>{appointment.customer}</td>
-                        <td>{appointment.date_time.slice(0,10)}</td>
-                        <td>{appointment.date_time.slice(11, 16)}</td>
+                        <td>{date}</td>
+                        <td>{time}</td>
                         <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
                         <td>{appointment.reason}</td>
                         <td>
