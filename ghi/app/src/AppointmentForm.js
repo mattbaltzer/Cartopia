@@ -60,7 +60,6 @@ function AppointmentForm(props) {
         data.date_time = date_time;
         data.technician = technician;
         data.reason = reason;
-        console.log(data)
 
         const AppointmentUrl = "http://localhost:8080/api/appointments/";
         const fetchConfig = {
@@ -73,8 +72,6 @@ function AppointmentForm(props) {
 
         const response = await fetch(AppointmentUrl, fetchConfig);
         if (response.ok) {
-            const newAppointment = await response.json();
-            console.log(newAppointment)
 
             setVin('');
             setCustomer('');
@@ -154,7 +151,7 @@ function AppointmentForm(props) {
                 {technicians.map((technician) => {
                   return (
                     <option key={technician.employee_id} value={technician.employee_id}>
-                      {technician.employee_id}
+                      {technician.first_name} {technician.last_name}
                     </option>
                   );
                 })}
