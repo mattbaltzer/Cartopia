@@ -46,10 +46,10 @@ function App() {
 					<Route path="customers/create" element={<CustomerForm />} />
 					<Route path="sales" element={<RecordSaleList />} />
 					<Route path="sales/create" element={<RecordSaleForm />} />
-					{/* <Route
+					<Route
 						path="sales/history"
 						element={<SalespersonHistory />}
-					/> */}
+					/>
 				</Routes>
 			</div>
 		</BrowserRouter>

@@ -1,103 +1,110 @@
-// import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-// function SalespersonHistory() {
-// 	const [sales, setSales] = useState([]);
-// 	const [sale, setSale] = useState("");
+function SalespersonHistory() {
+	const [sales, setSales] = useState([]);
+	const [salespeople, setSalespeople] = useState([]);
+	const [salesperson, setSalesperson] = useState("");
 
-// 	const fetchData = async () => {
-// 		const url = "http://localhost:8090/api/sales/";
+	const fetchData = async () => {
+		const url = "http://localhost:8090/api/sales/";
 
-// 		const response = await fetch(url);
+		const response = await fetch(url);
 
-// 		if (response.ok) {
-// 			const data = await response.json();
-// 			setSales(data.sales);
-// 		}
-// 	};
+		if (response.ok) {
+			const data = await response.json();
+			setSales(data.sales);
+		}
+	};
 
-// 	useEffect(() => {
-// 		fetchData();
-// 	}, []);
+	useEffect(() => {
+		fetchData();
+	}, []);
 
-// 	// const handleSubmit = async (event) => {
-// 	// 	event.preventDefault();
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 
-// 	// 	const data = {};
-// 	// 	data.first_name = firstName;
-// 	// 	data.last_name = lastName;
-// 	// 	data.employee_id = employeeId;
-// 	// 	console.log(data);
+		const data = {};
+		data.salesperson = salesperson;
+		console.log(data);
 
-// 	// 	const salespersonUrl = "http://localhost:8090/api/salespeople/";
-// 	// 	const fetchConfig = {
-// 	// 		method: "post",
-// 	// 		body: JSON.stringify(data),
-// 	// 		headers: {
-// 	// 			"Content-Type": "application/json",
-// 	// 		},
-// 	// 	};
+		const salespersonUrl = "http://localhost:8090/api/salespeople/";
+		const fetchConfig = {
+			method: "post",
+			body: JSON.stringify(data),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
 
-// 	// 	const response = await fetch(salespersonUrl, fetchConfig);
-// 	// 	if (response.ok) {
-// 	// 		const newSalesperson = await response.json();
-// 	// 		console.log(newSalesperson);
-// 	// 		setFirstName("");
-// 	// 		setLastname("");
-// 	// 		setEmployeeId("");
-// 	// 	}
-// 	// };
+		const response = await fetch(salespersonUrl, fetchConfig);
+		if (response.ok) {
+			const newSalesperson = await response.json();
+			console.log(newSalesperson);
+			setSalesperson("");
+		}
+	};
 
-// 	// const handleFirstNameChange = (event) => {
-// 	// 	const value = event.target.value;
-// 	// 	setFirstName(value);
-// 	// };
+	const handleSalespersonChange = (event) => {
+		const value = event.target.value;
+		setSalesperson(value);
+	};
 
-// 	// const handleLastNameChange = (event) => {
-// 	// 	const value = event.target.value;
-// 	// 	setLastname(value);
-// 	// };
+	return (
+		<div className="shadow p-4 mt-4">
+			<h1>Salesperson History</h1>
+			<form onSubmit={handleSubmit} id="create-history-form"></form>
 
-// 	// const handleEmployeeIdChange = (event) => {
-// 	// 	const value = event.target.value;
-// 	// 	setEmployeeId(value);
-// 	// };
+			<select
+				value={salesperson}
+				onChange={handleSalespersonChange}
+				required
+				name="salesperson"
+				id="salesperson"
+				className="form-select"
+			>
+				<option value="">Choose a Salesperson</option>
+				{salespeople.map((salesperson) => {
+					return (
+						<option
+							key={salesperson.employee_id}
+							value={salesperson.employee_id}
+						>
+							{salesperson.employee_id}
+						</option>
+					);
+				})}
+			</select>
+			<table className="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Salesperson</th>
+						<th scope="col">Customer</th>
+						<th scope="col">VIN</th>
+						<th scope="col">Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{sales.map((sale) => {
+						return (
+							<tr key={sale.salesperson.employee_id}>
+								<td>{sale.salesperson.employee_id}</td>
+								<td>
+									{sale.salesperson.first_name}{" "}
+									{sale.salesperson.last_name}
+								</td>
+								<td>
+									{sale.customer.first_name}{" "}
+									{sale.customer.last_name}
+								</td>
+								<td>{sale.automobile.vin}</td>
+								<td>{sale.price} </td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</table>
+		</div>
+	);
+}
 
-// 	return (
-// 		<div className="row">
-// 			<div className="offset-3 col-6">
-// 				<div className="shadow p-4 mt-4">
-// 					<h1>Record a new Sale</h1>
-// 					<form onSubmit={handleSubmit} id="create-sale-form">
-// 						<div className="mb-3">
-// 							<label htmlFor="automobile">Automobile VIN</label>
-// 							<select
-// 								value={automobile}
-// 								onChange={handleAutomobileChange}
-// 								required
-// 								name="automobile"
-// 								id="automobile"
-// 								className="form-select"
-// 							>
-// 								<option value="">
-// 									Choose an automobile VIN
-// 								</option>
-// 								{autos.map((automobile) => {
-// 									return (
-// 										<option
-// 											key={automobile.vin}
-// 											value={automobile.vin}
-// 										>
-// 											{automobile.vin}
-// 										</option>
-// 									);
-// 								})}
-// 							</select>
-// 						</div>
-// 					</form>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
-// // export default SalespersonHistory;
+export default SalespersonHistory;

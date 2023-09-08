@@ -100,11 +100,11 @@ function Nav() {
 								Add a Sale
 							</NavLink>
 						</li>
-						{/* <li className="nav-item">
+						<li className="nav-item">
 							<NavLink className="nav-link" to="/sales/history">
 								Salesperson History
 							</NavLink>
-						</li> */}
+						</li>
 					</ul>
 				</div>
 			</div>
