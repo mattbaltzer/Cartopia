@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 function RecordSaleForm() {
@@ -235,14 +234,12 @@ function RecordSaleForm() {
 								className="form-control"
 							/>
 						</div>
-						{/* <NavLink to="/sales"> */}
 						<button
 							className="btn btn-primary"
 							onClick={() => onSale(automobile)}
 						>
 							Create
 						</button>
-						{/* </NavLink> */}
 					</form>
 				</div>
 			</div>
