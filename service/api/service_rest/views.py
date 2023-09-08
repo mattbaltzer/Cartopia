@@ -12,6 +12,7 @@ class TechnicianEncoder(ModelEncoder):
         "first_name",
         "last_name",
         "employee_id",
+        "id",
     ]
 
 
@@ -60,9 +61,9 @@ def api_list_technicians(request):
 
 
 @require_http_methods(['DELETE'])
-def api_delete_technician(request, employee_id):
+def api_delete_technician(request, id):
     if request.method == "DELETE":
-        count, _ = Technician.objects.filter(employee_id=employee_id).delete()
+        count, _ = Technician.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
 
 
