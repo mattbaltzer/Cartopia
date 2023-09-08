@@ -16,7 +16,7 @@ VIP - If an appointment VIN matches an existing automobile in our inventory, it 
 Appointment Status - When an appointment is created, its status is defaulted to created. You can update its status to finished or canceled.
 
 
-Models
+**Models**
 
 For the Service microservice, there are three models:
 
@@ -25,12 +25,12 @@ For the Service microservice, there are three models:
 3. Appointment - containing date_time, reason, status, vin, customer and technician fields. The technician field is a foreign key.
 
 
-Poller
+**Poller**
 
 There is an Automobile poller that updates the AutomobileVO every 60 seconds with updated VINs from the Inventory service.
 
 
-Technician API Endpoints
+**Technician API Endpoints**
 
 Method: GET
 
@@ -39,11 +39,13 @@ Action: List technicians
 URL: http://localhost:8080/api/technicians/
 
 
+
 Method: POST
 
 Action: Create a technician
 
 URL: http://localhost:8080/api/technicians/
+
 
 
 Method: DELETE
@@ -54,13 +56,14 @@ URL: http://localhost:8080/api/technicians/:id/
 
 
 
-Service Appointment API Endpoints
+**Service Appointment API Endpoints**
 
 Method: GET
 
 Action: List appointments
 
 URL: http://localhost:8080/api/appointments/
+
 
 
 Method: POST
@@ -70,6 +73,7 @@ Action: Create an appointment
 URL: http://localhost:8080/api/appointments/
 
 
+
 Method: DELETE
 
 Action: Delete an appointment
@@ -77,11 +81,13 @@ Action: Delete an appointment
 URL: http://localhost:8080/api/appointments/:id/
 
 
+
 Method: PUT
 
 Action: Set appointment status to "canceled"
 
 URL: http://localhost:8080/api/appointments/:id/cancel/
+
 
 
 Method: PUT
@@ -92,41 +98,35 @@ URL: http://localhost:8080/api/appointments/:id/finish/
 
 
 
-Sample Request Bodies
+**Sample Request Bodies**
 
 
-Creating a Technician
+**Creating a Technician**
 
 Here is a sample request body for creating a technician:
 
-
+```
 {
-
 	"first_name": "Lily",
-
 	"last_name": "Bloom",
-
 	"employee_id": "employee123"
-
 }
+```
 
 
 Here is a sample response:
 
-
+```
 {
-
 	"first_name": "Lily",
-
 	"last_name": "Bloom",
-
 	"employee_id": "employee123"
-
 }
+```
 
 
 
-Creating an Appointment
+**Creating an Appointment**
 
 Below is a sample request body for creating an appointment.
 
@@ -134,69 +134,55 @@ Below is a sample request body for creating an appointment.
 
 Also date_time is in UTC.
 
-
+```
 {
-
 	"customer": "Atlas",
-
 	"date_time": "2023-12-02 12:00",
-
 	"reason": "oil change",
-
 	"status": "created",
-
 	"technician": "testing123",
-
 	"vin": "1C3CC5FB2AN120392"
-
 }
+```
 
 
 Here is a sample response:
 
-
+```
 {
 	"date_time": "2023-12-02 12:00",
-
 	"reason": "oil change",
-
 	"status": "created",
-
 	"vin": "1C3CC5FB2AN120392",
-
 	"customer": "Atlas",
-
 	"id": 29,
-
 	"technician": {
-
 		"first_name": "laura",
-
 		"last_name": "le",
-
 		"employee_id": "testing123"
-
 	},
-
 	"vip": false
-
 }
+```
 
 
-Updating Appointment Status
+**Updating Appointment Status**
 
 Here is a sample request body for updating the appointment status to canceled:
 
+```
 {
 	"status": "canceled"
 }
+```
 
 Here is a sample request body for updating the appointment status to finished:
 
+```
 {
 	"status": "finished"
 }
-
+```
 
 
 ## Sales microservice
