@@ -43,7 +43,7 @@ function RecordSaleList() {
 									{sale.customer.first_name}{" "}
 									{sale.customer.last_name}
 								</td>
-								<td>{sale.automobiles.vin}</td>
+								<td>{sale.automobile.vin}</td>
 								<td>{sale.price} </td>
 							</tr>
 						);

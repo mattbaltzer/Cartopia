@@ -1,13 +1,66 @@
+import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 function RecordSaleForm() {
 	const [sales, setSales] = useState([]);
-	const [vin, setVin] = useState("");
+	const [customers, setCustomers] = useState([]);
+	const [salespeople, setSalespeople] = useState([]);
+	const [autos, setAutos] = useState([]);
+	const [automobile, setAutomobile] = useState("");
 	const [salesperson, setSalesperson] = useState("");
 	const [customer, setCustomer] = useState("");
 	const [price, setPrice] = useState(0);
 
+	const getData = async () => {
+		const url = "http://localhost:8090/api/customers/";
+
+		const response = await fetch(url);
+
+		if (response.ok) {
+			const data = await response.json();
+			setCustomers(data.customers);
+		}
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	const grabData = async () => {
+		const url = "http://localhost:8090/api/salespeople/";
+
+		const response = await fetch(url);
+
+		if (response.ok) {
+			const data = await response.json();
+			setSalespeople(data.salespeople);
+		}
+	};
+
+	useEffect(() => {
+		grabData();
+	}, []);
+
 	const fetchData = async () => {
+		const url = "http://localhost:8100/api/automobiles/";
+
+		const response = await fetch(url);
+
+		if (response.ok) {
+			const data = await response.json();
+			const unsoldAutomobiles = data.autos.filter(
+				(sales) => sales.sold === false
+			);
+			setAutos(unsoldAutomobiles);
+			setAutos(data.autos);
+		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+	const snatchData = async () => {
 		const url = "http://localhost:8090/api/sales/";
 
 		const response = await fetch(url);
@@ -19,20 +72,36 @@ function RecordSaleForm() {
 	};
 
 	useEffect(() => {
-		fetchData();
+		snatchData();
 	}, []);
+
+	const onSale = async (vin) => {
+		const updateUrl = `http://localhost:8100/api/automobiles/${vin}/`;
+		const grabConfig = {
+			method: "PUT",
+			body: JSON.stringify({ sold: true }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		const otherResponse = await fetch(updateUrl, grabConfig);
+
+		if (otherResponse.ok) {
+			fetchData();
+		}
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		const data = {};
-		data.vin = vin;
+		data.automobile = automobile;
 		data.salesperson = salesperson;
 		data.customer = customer;
 		data.price = price;
 		console.log(data);
 
-		const recordsaleUrl = "http://localhost:8090/api/sales/";
+		const recordSaleUrl = "http://localhost:8090/api/sales/";
 		const fetchConfig = {
 			method: "post",
 			body: JSON.stringify(data),
@@ -41,19 +110,20 @@ function RecordSaleForm() {
 			},
 		};
 
-		const response = await fetch(recordsaleUrl, fetchConfig);
+		const response = await fetch(recordSaleUrl, fetchConfig);
 		if (response.ok) {
 			const newRecordedSale = await response.json();
 			console.log(newRecordedSale);
-			setVin("");
+			setAutomobile("");
 			setSalesperson("");
 			setCustomer("");
+			setPrice(0);
 		}
 	};
 
-	const handleVinChange = (event) => {
+	const handleAutomobileChange = (event) => {
 		const value = event.target.value;
-		setVin(value);
+		setAutomobile(value);
 	};
 
 	const handleSalespersonChange = (event) => {
@@ -78,24 +148,25 @@ function RecordSaleForm() {
 					<h1>Record a new Sale</h1>
 					<form onSubmit={handleSubmit} id="create-sale-form">
 						<div className="mb-3">
+							<label htmlFor="automobile">Automobile VIN</label>
 							<select
-								value={vin}
-								onChange={handleVinChange}
+								value={automobile}
+								onChange={handleAutomobileChange}
 								required
-								name="vin"
-								id="vin"
+								name="automobile"
+								id="automobile"
 								className="form-select"
 							>
 								<option value="">
 									Choose an automobile VIN
 								</option>
-								{sales.map((sale) => {
+								{autos.map((automobile) => {
 									return (
 										<option
-											key={sale.automobile.id}
-											value={sale.automobile.id}
+											key={automobile.vin}
+											value={automobile.vin}
 										>
-											{sale.automobile.vin}
+											{automobile.vin}
 										</option>
 									);
 								})}
@@ -103,6 +174,7 @@ function RecordSaleForm() {
 						</div>
 
 						<div className="mb-3">
+							<label htmlFor="salesperson">Salesperson</label>
 							<select
 								value={salesperson}
 								onChange={handleSalespersonChange}
@@ -112,13 +184,14 @@ function RecordSaleForm() {
 								className="form-select"
 							>
 								<option value="">Choose a salesperson</option>
-								{sales.map((sale) => {
+								{salespeople.map((salesperson) => {
 									return (
 										<option
-											key={sale.salesperson.employee_id}
-											value={sale.salesperson.employee_id}
+											key={salesperson.employee_id}
+											value={salesperson.employee_id}
 										>
-											{sale.salesperson.name}
+											{salesperson.first_name}{" "}
+											{salesperson.last_name}
 										</option>
 									);
 								})}
@@ -126,6 +199,7 @@ function RecordSaleForm() {
 						</div>
 
 						<div className="mb-3">
+							<label htmlFor="customer">Customer</label>
 							<select
 								value={customer}
 								onChange={handleCustomerChange}
@@ -135,19 +209,20 @@ function RecordSaleForm() {
 								className="form-select"
 							>
 								<option value="">Choose a customer</option>
-								{sales.map((sale) => {
+								{customers.map((customer) => {
 									return (
 										<option
-											key={sale.customer.id}
-											value={sale.customer.id}
+											key={customer.id}
+											value={customer.id}
 										>
-											{sale.customer.name}
+											{customer.first_name}{" "}
+											{customer.last_name}
 										</option>
 									);
 								})}
 							</select>
 						</div>
-
+						<label htmlFor="price">Price</label>
 						<div className="form-floating mb-3">
 							<input
 								value={price}
@@ -159,9 +234,15 @@ function RecordSaleForm() {
 								id="price"
 								className="form-control"
 							/>
-							<label htmlFor="price">Price</label>
 						</div>
-						<button className="btn btn-primary">Create</button>
+						{/* <NavLink to="/sales"> */}
+						<button
+							className="btn btn-primary"
+							onClick={() => onSale(automobile)}
+						>
+							Create
+						</button>
+						{/* </NavLink> */}
 					</form>
 				</div>
 			</div>

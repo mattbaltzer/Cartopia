@@ -3,10 +3,8 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 import json
 
-from common.json import ModelEncoder
 from .encoders import (
     SalespersonEncoder,
-    AutomobileVOEncoder,
     CustomerEncoder,
     SalesEncoder
     )
@@ -96,7 +94,7 @@ def api_customer(request, id):
             return JsonResponse({"message": "Does not exist"})
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST", "PUT"])
 def api_sales(request):
     sales = []
     if request.method == "GET":
@@ -134,6 +132,7 @@ def api_sales(request):
                 status=400,
             )
         sale = Sale.objects.create(**content)
+        content["sold"] = True
         return JsonResponse(
             sale,
             encoder=SalesEncoder,
