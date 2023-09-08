@@ -18,6 +18,7 @@ function ManufacturersList() {
 
 return (
     <div>
+    <h1>Manufacturers</h1>
     <table className='table table-striped'>
         <thead>
             <tr>

@@ -29,7 +29,6 @@ function ModelForm() {
         data.name = name;
         data.picture_url = pictureUrl;
         data.manufacturer_id = manufacturer;
-        console.log(data)
 
         const modelUrl = "http://localhost:8100/api/models/";
         const fetchConfig = {
@@ -42,8 +41,6 @@ function ModelForm() {
 
         const response = await fetch(modelUrl, fetchConfig);
         if (response.ok) {
-            const newModel = await response.json();
-            console.log(newModel)
             setName('');
             setPictureUrl('');
             setManufacturer('');
@@ -69,7 +66,7 @@ function ModelForm() {
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
-              <h1>Create a Model</h1>
+              <h1>Create a vehicle model</h1>
               <form onSubmit={handleSubmit} id="create-model-form">
 
                 <div className="form-floating mb-3">

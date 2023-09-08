@@ -18,6 +18,7 @@ function AutomobileList() {
 
 return (
     <div>
+        <h1>Automobiles</h1>
     <table className='table table-striped'>
         <thead>
             <tr>
@@ -38,7 +39,7 @@ return (
                         <td>{auto.year}</td>
                         <td>{auto.model.name}</td>
                         <td>{auto.model.manufacturer.name}</td>
-                        <td>{auto.sold}</td>
+                        <td>{auto.sold ? 'Yes': 'No'}</td>
                     </tr>
                 );
             })}
